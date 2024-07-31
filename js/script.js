@@ -15,8 +15,7 @@ const fetchRandomNews = async() =>{
 }
 const displayCard = (articles) =>{
     cardContainer.innerHTML = "";
-    arti
-    cles.forEach((article)=>{
+    articles.forEach((article)=>{
 
         const card = document.createElement("div");
         card.classList.add("card");
