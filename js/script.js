@@ -1,8 +1,38 @@
 const apiKey = "9025c4ac8b1746a586042edeacc95de6";
 const cardContainer = document.getElementById("card-container");
-const fetchRandomNews = async() =>{
+const searchInput = document.getElementById('search-input');
+const searchButton = document.getElementById("search-button");
+
+const fetchRandomNews = async(query) =>{
     try{
         const apiUrl = `https://newsapi.org/v2/top-headlines?country=us&pageSize=10&apiKey=${apiKey}`;
+        const response = await fetch(apiUrl);
+        const data = await response.json();
+        return data.articles;
+
+
+    }catch(error){
+        console.error("Error fetching random news",error);
+        return [];
+    }
+}
+searchButton.addEventListener("click", async() =>{
+    const query = searchInput.value.trim();
+    console.log(query);
+    if(query !== ""){
+        try{
+            const articles = await fetchNewsQuery(query);
+            displayCard(articles);
+        }catch(error){
+            console.error("Error fetching news by query",error);
+        }
+    }
+
+
+});
+const fetchNewsQuery = async (query) =>{
+    try{
+        const apiUrl = `https://newsapi.org/v2/everything?q=${query}&pageSize=10&apiKey=${apiKey}`;
         const response = await fetch(apiUrl);
         const data = await response.json();
         return data.articles;
@@ -31,6 +61,9 @@ const displayCard = (articles) =>{
         card.appendChild(img);
         card.appendChild(title);
         card.appendChild(description);
+        card.addEventListener("click", () =>{
+            window.open(article.url, "_blank");
+        }),
         cardContainer.appendChild(card);
 
 
