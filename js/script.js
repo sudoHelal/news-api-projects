@@ -23,7 +23,9 @@ const displayCard = (articles) =>{
          img.src = article.urlToImage;
          img.alt = article.title;
          const title = document.createElement("h4");
-         title.textContent = article.title;
+         const truncatedTitle = article.title.length > 30? 
+         article.title.slice(0, 30) +"...." : article.title;
+         title.textContent = truncatedTitle;
          const description = document.createElement("p");
         description.textContent = article.description;
         card.appendChild(img);
